@@ -136,3 +136,40 @@ let myFirstCar = Car(name: "Corolla", year: 2015)
 let mySecondCar = Car(name: "Civic", year: 2015)
 
 print(checkIfEqual(myFirstCar, mySecondCar))
+
+// Los genericos pueden estar en clases, estructuras y enum
+// func
+// los protocolos no se pueden hacer lo que hace es que swift tiene associated type
+
+
+// IteratorProtocol
+// Sequence
+
+protocol IteratorProtocol {
+    associatedtype Element
+    
+    mutating func next() -> Element?
+}
+
+// T, U -> la T es por Type y U solo por que es la letra que viene despues de la U
+struct stackIterator<T>: IteratorProtocol {
+    typealias Element = T
+    
+    var stack: StackWithElement<T>
+    
+    mutating func next() -> T? {
+        return stack.pop()
+    }
+}
+
+var myStack = StackWithElement<Int>()
+myStack.push(10)
+myStack.push(20)
+myStack.push(30)
+
+var myStackIterator = stackIterator(stack: myStack)
+
+while let value = myStackIterator.next() {
+    print("\(value)")
+}
+
